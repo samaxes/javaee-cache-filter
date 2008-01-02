@@ -1,8 +1,8 @@
 /*
- * $Id: CacheFilter.java 15 2008-01-01 05:36:30Z samaxes $
+ * $Id$
  *
- * Last changed on : $Date: 2008-01-01 05:36:30 +0000 (ter, 01 Jan 2008) $
- * Last changed by : $Author: samaxes $
+ * Last changed on : $Date$
+ * Last changed by : $Author$
  */
 package com.samaxes.cachefilter.presentation;
 
@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
  * Filter responsible for browser caching.
  * 
  * @author : Samuel Santos
- * @version : $Revision: 15 $
+ * @version : $Revision$
  */
 public class CacheFilter implements Filter {
 
