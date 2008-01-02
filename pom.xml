@@ -11,7 +11,7 @@
     <name>Cache Filter</name>
     <version>1.0</version>
     <url>http://code.google.com/p/cache-filter/</url>
-    <description>Filter that set browser's cache HTTP headers.</description>
+    <description>Filter that sets browser's cache HTTP headers.</description>
     <licenses>
         <license>
             <name>The Apache Software License, Version 2.0</name>
@@ -20,6 +20,7 @@
         </license>
     </licenses>
     <scm>
+        <connection>scm:svn:https://cache-filter.googlecode.com/svn/trunk/</connection>
         <url>https://cache-filter.googlecode.com/svn/trunk/</url>
     </scm>
     <build>
