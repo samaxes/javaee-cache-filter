@@ -42,7 +42,7 @@ import org.slf4j.LoggerFactory;
  * Filter responsible for browser caching.
  * 
  * @author : Samuel Santos
- * @version : $LastChangedRevision$
+ * @version : $Revision$
  */
 public class CacheFilter implements Filter {
 
