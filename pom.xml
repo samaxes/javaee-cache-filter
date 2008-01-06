@@ -26,7 +26,6 @@
     </scm>
 
     <build>
-        <finalName>cache-filter</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
