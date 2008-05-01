@@ -17,6 +17,13 @@
  */
 package com.samaxes.cachefilter.presentation;
 
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.servlet.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -25,24 +32,11 @@ import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.TimeZone;
 
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Filter responsible for browser caching.
- * 
+ *
  * @author : Samuel Santos
- * @version : $Revision$
+ * @version : $Revision: 25 $
  */
 public class CacheFilter implements Filter {
 
@@ -52,7 +46,7 @@ public class CacheFilter implements Filter {
 
     /**
      * Place this filter into service.
-     * 
+     *
      * @param filterConfig {@link FilterConfig}
      */
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -68,11 +62,11 @@ public class CacheFilter implements Filter {
 
     /**
      * Sets cache headers directives.
-     * 
-     * @param servletRequest {@link ServletRequest}
+     *
+     * @param servletRequest  {@link ServletRequest}
      * @param servletResponse {@link ServletResponse}
-     * @param filterChain {@link FilterChain}
-     * @throws IOException {@link FilterChain}
+     * @param filterChain     {@link FilterChain}
+     * @throws IOException      {@link FilterChain}
      * @throws ServletException {@link ServletException}
      */
     public void doFilter(ServletRequest servletRequest,
@@ -100,7 +94,7 @@ public class CacheFilter implements Filter {
                                     int seconds) {
         if (response != null) {
             Calendar cal = new GregorianCalendar();
-            cal.roll(Calendar.SECOND, seconds);
+            cal.add(Calendar.SECOND, seconds);
             response.setHeader("Cache-Control", privacy + ", max-age=" + seconds + ", must-revalidate");
             response.setHeader("Expires", htmlExpiresDateFormat().format(cal.getTime()));
         }
