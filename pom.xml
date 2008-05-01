@@ -8,7 +8,7 @@
     <artifactId>cachefilter</artifactId>
     <packaging>jar</packaging>
     <name>Cache Filter</name>
-    <version>1.0</version>
+    <version>1.0.1</version>
     <url>http://code.google.com/p/cache-filter/</url>
     <description>Filter that sets browser's cache HTTP headers.</description>
 
