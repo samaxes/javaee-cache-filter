@@ -17,13 +17,6 @@
  */
 package com.samaxes.cachefilter.presentation;
 
-import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.servlet.*;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -32,21 +25,34 @@ import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Filter responsible for browser caching.
- *
+ * 
  * @author : Samuel Santos
  * @version : $Revision: 25 $
  */
 public class CacheFilter implements Filter {
 
-    private static Logger logger = LoggerFactory.getLogger(CacheFilter.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(CacheFilter.class);
 
     private FilterConfig filterConfig;
 
     /**
      * Place this filter into service.
-     *
+     * 
      * @param filterConfig {@link FilterConfig}
      */
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -62,36 +68,30 @@ public class CacheFilter implements Filter {
 
     /**
      * Sets cache headers directives.
-     *
-     * @param servletRequest  {@link ServletRequest}
+     * 
+     * @param servletRequest {@link ServletRequest}
      * @param servletResponse {@link ServletResponse}
-     * @param filterChain     {@link FilterChain}
-     * @throws IOException      {@link FilterChain}
+     * @param filterChain {@link FilterChain}
+     * @throws IOException {@link FilterChain}
      * @throws ServletException {@link ServletException}
      */
-    public void doFilter(ServletRequest servletRequest,
-                         ServletResponse servletResponse,
-                         FilterChain filterChain) throws IOException, ServletException {
-        if (logger.isDebugEnabled()) {
-            logger.debug("Setting cache headers for file " + ((HttpServletRequest) servletRequest).getRequestURI());
-        }
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
+            throws IOException, ServletException {
+        LOGGER.debug("Setting cache headers for file {}", ((HttpServletRequest) servletRequest).getRequestURI());
 
         String privacy = filterConfig.getInitParameter("privacy");
         String expirationTime = filterConfig.getInitParameter("expirationTime");
 
         if (StringUtils.isNotBlank(privacy) && StringUtils.isNotBlank(expirationTime)) {
             // set the provided HTTP response parameters
-            setCacheExpireDate((HttpServletResponse) servletResponse, privacy, Integer.valueOf(expirationTime)
-                    .intValue());
+            setCacheExpireDate((HttpServletResponse) servletResponse, privacy, Integer.valueOf(expirationTime));
         }
 
         // pass the request/response on
         filterChain.doFilter(servletRequest, servletResponse);
     }
 
-    private void setCacheExpireDate(HttpServletResponse response,
-                                    String privacy,
-                                    int seconds) {
+    private void setCacheExpireDate(HttpServletResponse response, String privacy, int seconds) {
         if (response != null) {
             Calendar cal = new GregorianCalendar();
             cal.add(Calendar.SECOND, seconds);
