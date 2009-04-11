@@ -31,12 +31,7 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Filter responsible for browser caching.
@@ -45,8 +40,6 @@ import org.slf4j.LoggerFactory;
  * @version : $Revision: 25 $
  */
 public class CacheFilter implements Filter {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(CacheFilter.class);
 
     private FilterConfig filterConfig;
 
@@ -77,12 +70,10 @@ public class CacheFilter implements Filter {
      */
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
             throws IOException, ServletException {
-        LOGGER.debug("Setting cache headers for file {}", ((HttpServletRequest) servletRequest).getRequestURI());
-
         String privacy = filterConfig.getInitParameter("privacy");
         String expirationTime = filterConfig.getInitParameter("expirationTime");
 
-        if (StringUtils.isNotBlank(privacy) && StringUtils.isNotBlank(expirationTime)) {
+        if (privacy != null && !"".equals(privacy) && expirationTime != null && !"".equals(expirationTime)) {
             // set the provided HTTP response parameters
             setCacheExpireDate((HttpServletResponse) servletResponse, privacy, Integer.valueOf(expirationTime));
         }

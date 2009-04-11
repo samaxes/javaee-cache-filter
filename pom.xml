@@ -8,7 +8,7 @@
     <artifactId>cachefilter</artifactId>
     <packaging>jar</packaging>
     <name>Cache Filter</name>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <url>http://code.google.com/p/cache-filter/</url>
     <description>Filter that sets browser's cache HTTP headers.</description>
 
@@ -31,9 +31,18 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>2.0.2</version>
+                <inherited>true</inherited>
                 <configuration>
-                    <source>1.5</source>
-                    <target>1.5</target>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.2</version>
+                <configuration>
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
@@ -61,22 +70,6 @@
             <artifactId>servlet-api</artifactId>
             <version>[2.5,)</version>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-            <version>[1.5,)</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>log4j</groupId>
-                    <artifactId>log4j</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>commons-lang</groupId>
-            <artifactId>commons-lang</artifactId>
-            <version>[2.4,)</version>
         </dependency>
     </dependencies>
 </project>
