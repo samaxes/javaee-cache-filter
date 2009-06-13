@@ -7,10 +7,10 @@
     <groupId>com.samaxes.cachefilter</groupId>
     <artifactId>cachefilter</artifactId>
     <packaging>jar</packaging>
-    <name>Cache Filter</name>
+    <name>J2EE Cache Filter</name>
     <version>1.0.2</version>
     <url>http://code.google.com/p/cache-filter/</url>
-    <description>Filter that sets browser's cache HTTP headers.</description>
+    <description>J2EE Cache Filter is a Servlet Filter that allows you to set HTTP headers in order to enable browser caching.</description>
 
     <licenses>
         <license>
