@@ -4,14 +4,16 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
     <groupId>com.samaxes.cachefilter</groupId>
     <artifactId>cachefilter</artifactId>
+    <version>1.0.3-SNAPSHOT</version>
     <packaging>jar</packaging>
+
     <name>J2EE Cache Filter</name>
-    <version>1.0.2</version>
     <url>http://code.google.com/p/cache-filter/</url>
     <description>J2EE Cache Filter is a Servlet Filter that allows you to set HTTP headers in order to enable browser caching.</description>
-
+    <inceptionYear>2009</inceptionYear>
     <licenses>
         <license>
             <name>The Apache Software License, Version 2.0</name>
@@ -20,9 +22,27 @@
         </license>
     </licenses>
 
+    <developers>
+        <developer>
+            <id>samaxes</id>
+            <name>Samuel Santos</name>
+            <url>http://www.samaxes.com/</url>
+            <roles>
+                <role>project owner</role>
+                <role>developer</role>
+            </roles>
+            <timezone>0</timezone>
+        </developer>
+    </developers>
+
+    <issueManagement>
+        <system>Google Code</system>
+        <url>http://code.google.com/p/cache-filter/issues/list</url>
+    </issueManagement>
     <scm>
-        <connection>scm:svn:https://cache-filter.googlecode.com/svn/trunk/</connection>
-        <url>https://cache-filter.googlecode.com/svn/trunk/</url>
+        <connection>scm:svn:http://cache-filter.googlecode.com/svn/trunk</connection>
+        <developerConnection>scm:svn:https://cache-filter.googlecode.com/svn/trunk</developerConnection>
+        <url>http://cache-filter.googlecode.com/svn/trunk</url>
     </scm>
 
     <build>
