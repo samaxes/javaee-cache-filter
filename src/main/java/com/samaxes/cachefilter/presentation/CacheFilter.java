@@ -18,12 +18,6 @@
 package com.samaxes.cachefilter.presentation;
 
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.Locale;
-import java.util.TimeZone;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -70,30 +64,20 @@ public class CacheFilter implements Filter {
      */
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
             throws IOException, ServletException {
+        HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse;
         String privacy = filterConfig.getInitParameter("privacy");
         String expirationTime = filterConfig.getInitParameter("expirationTime");
 
-        if (privacy != null && !"".equals(privacy) && expirationTime != null && !"".equals(expirationTime)) {
+        if (httpServletResponse != null && privacy != null && !"".equals(privacy) && expirationTime != null
+                && !"".equals(expirationTime)) {
+            long seconds = Long.valueOf(expirationTime);
+
             // set the provided HTTP response parameters
-            setCacheExpireDate((HttpServletResponse) servletResponse, privacy, Integer.valueOf(expirationTime));
+            httpServletResponse.setHeader("Cache-Control", privacy + ", max-age=" + seconds + ", must-revalidate");
+            httpServletResponse.setDateHeader("Expires", System.currentTimeMillis() + seconds * 1000L);
         }
 
         // pass the request/response on
         filterChain.doFilter(servletRequest, servletResponse);
-    }
-
-    private void setCacheExpireDate(HttpServletResponse response, String privacy, int seconds) {
-        if (response != null) {
-            Calendar cal = new GregorianCalendar();
-            cal.add(Calendar.SECOND, seconds);
-            response.setHeader("Cache-Control", privacy + ", max-age=" + seconds + ", must-revalidate");
-            response.setHeader("Expires", htmlExpiresDateFormat().format(cal.getTime()));
-        }
-    }
-
-    private DateFormat htmlExpiresDateFormat() {
-        DateFormat httpDateFormat = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z", Locale.US);
-        httpDateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
-        return httpDateFormat;
     }
 }
