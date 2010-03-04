@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project
-    xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.samaxes.cachefilter</groupId>
     <artifactId>cachefilter</artifactId>
-    <version>1.2-SNAPSHOT</version>
+    <version>1.2</version>
     <packaging>jar</packaging>
 
     <name>J2EE Cache Filter</name>
@@ -40,9 +37,9 @@
         <url>http://code.google.com/p/cache-filter/issues/list</url>
     </issueManagement>
     <scm>
-        <connection>scm:svn:http://cache-filter.googlecode.com/svn/trunk</connection>
-        <developerConnection>scm:svn:https://cache-filter.googlecode.com/svn/trunk</developerConnection>
-        <url>http://cache-filter.googlecode.com/svn/trunk</url>
+        <connection>scm:svn:http://cache-filter.googlecode.com/svn/tags/cachefilter-1.2</connection>
+        <developerConnection>scm:svn:https://cache-filter.googlecode.com/svn/tags/cachefilter-1.2</developerConnection>
+        <url>http://cache-filter.googlecode.com/svn/tags/cachefilter-1.2</url>
     </scm>
 
     <build>
