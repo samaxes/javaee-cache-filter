@@ -13,7 +13,7 @@
     <name>J2EE Cache Filter</name>
     <description>J2EE Cache Filter is a Servlet Filter that allows you to set HTTP headers in order to enable browser caching.</description>
     <url>http://code.google.com/p/cache-filter/</url>
-    <inceptionYear>2010</inceptionYear>
+    <inceptionYear>2007</inceptionYear>
     <organization>
         <name>samaxes</name>
         <url>http://www.samaxes.com/</url>
