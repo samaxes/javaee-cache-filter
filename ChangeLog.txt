@@ -2,6 +2,10 @@
 = J2EE Cache Filter =
 =====================
 
+== 1.2 ==
+ * Changed the default package to com.samaxes.filter.
+ * Updated the distribution repositories to Sonatype Nexus.
+
 == 1.1.0 ==
  * Use response.setDateHeader() instead of response.setHeader() to set "Expires" HTTP cache header.
  * Compiled against JDK 1.5 instead of JDK 1.6.

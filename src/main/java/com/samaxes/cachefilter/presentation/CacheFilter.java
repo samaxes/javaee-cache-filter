@@ -32,6 +32,7 @@ import javax.servlet.http.HttpServletResponse;
  * 
  * @author : Samuel Santos
  * @version : $Revision: 25 $
+ * @deprecated Please update to the new {@link com.samaxes.filter.CacheFilter CacheFilter} instead.
  */
 public class CacheFilter implements Filter {
 
