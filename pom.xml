@@ -7,7 +7,7 @@
 
     <groupId>com.samaxes.filter</groupId>
     <artifactId>cachefilter</artifactId>
-    <version>1.2-SNAPSHOT</version>
+    <version>1.2</version>
     <packaging>jar</packaging>
 
     <name>J2EE Cache Filter</name>
