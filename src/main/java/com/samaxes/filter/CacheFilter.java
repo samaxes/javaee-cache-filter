@@ -35,7 +35,13 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class CacheFilter implements Filter {
 
-    private FilterConfig filterConfig;
+    private boolean configured;
+
+    private String privacy;
+
+    private long seconds;
+
+    private long milliseconds;
 
     /**
      * Place this filter into service.
@@ -43,14 +49,20 @@ public class CacheFilter implements Filter {
      * @param filterConfig {@link FilterConfig}
      */
     public void init(FilterConfig filterConfig) throws ServletException {
-        this.filterConfig = filterConfig;
+        privacy = filterConfig.getInitParameter("privacy");
+        String expirationTime = filterConfig.getInitParameter("expirationTime");
+
+        if (privacy != null && !"".equals(privacy) && expirationTime != null && !"".equals(expirationTime)) {
+            seconds = Long.valueOf(expirationTime);
+            milliseconds = seconds * 1000L;
+            configured = true;
+        }
     }
 
     /**
      * Take this filter out of service.
      */
     public void destroy() {
-        this.filterConfig = null;
     }
 
     /**
@@ -65,16 +77,11 @@ public class CacheFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
             throws IOException, ServletException {
         HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse;
-        String privacy = filterConfig.getInitParameter("privacy");
-        String expirationTime = filterConfig.getInitParameter("expirationTime");
 
-        if (httpServletResponse != null && privacy != null && !"".equals(privacy) && expirationTime != null
-                && !"".equals(expirationTime)) {
-            long seconds = Long.valueOf(expirationTime);
-
+        if (httpServletResponse != null && configured) {
             // set the provided HTTP response parameters
             httpServletResponse.setHeader("Cache-Control", privacy + ", max-age=" + seconds + ", must-revalidate");
-            httpServletResponse.setDateHeader("Expires", System.currentTimeMillis() + seconds * 1000L);
+            httpServletResponse.setDateHeader("Expires", System.currentTimeMillis() + milliseconds);
         }
 
         // pass the request/response on
