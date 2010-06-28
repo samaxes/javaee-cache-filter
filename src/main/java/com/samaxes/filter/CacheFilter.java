@@ -30,8 +30,8 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Filter responsible for browser caching.
  * 
- * @author : Samuel Santos
- * @version : $Revision: 25 $
+ * @author Samuel Santos
+ * @version $Revision: 25 $
  */
 public class CacheFilter implements Filter {
 
