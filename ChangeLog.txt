@@ -2,6 +2,12 @@
 = J2EE Cache Filter =
 =====================
 
+== 2.0 ==
+ * Added NoEtagFilter to disable ETag HTTP header set by the DefaultServlet in Tomcat.
+ * Replaced privacy<String> parameter by private<Boolean>. Cache directive to control where the response may be cached.
+ * Added static<Boolean> parameter. Conditional requests are not required for static components.
+   Cache directive must-revalidate is used for non static to force that once a response becomes stale it has to be revalidated.
+
 == 1.2.1 ==
  * Optimized the configuration process. All the configurations are now done in the init method.
  * Added the Sonatype OSS Parent POM.
