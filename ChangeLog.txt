@@ -1,6 +1,6 @@
-=====================
-= J2EE Cache Filter =
-=====================
+========================
+= Java EE Cache Filter =
+========================
 
 == 2.0 ==
  * Added NoEtagFilter class to disable ETag HTTP header set by the DefaultServlet in Tomcat.

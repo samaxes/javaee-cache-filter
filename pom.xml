@@ -13,8 +13,8 @@
     <version>2.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>J2EE Cache Filter</name>
-    <description>J2EE Cache Filter is a Servlet Filter that allows you to set HTTP headers in order to enable browser caching.</description>
+    <name>Java EE Cache Filter</name>
+    <description>Java EE Cache Filter is a Servlet Filter that allows you to set HTTP headers in order to enable or disable browser caching.</description>
     <url>http://code.google.com/p/cache-filter/</url>
     <inceptionYear>2007</inceptionYear>
     <organization>
