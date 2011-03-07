@@ -28,6 +28,8 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
 
+import com.samaxes.filter.util.HTTPCacheHeader;
+
 /**
  * Filter responsible for disabling ETag header from the HTTP response.
  * 
@@ -57,7 +59,7 @@ public class NoEtagFilter implements Filter {
             ServletException {
         chain.doFilter(request, new HttpServletResponseWrapper((HttpServletResponse) response) {
             public void setHeader(String name, String value) {
-                if (!"ETag".equalsIgnoreCase(name)) {
+                if (!HTTPCacheHeader.ETAG.getName().equalsIgnoreCase(name)) {
                     super.setHeader(name, value);
                 }
             }

@@ -18,22 +18,30 @@
 package com.samaxes.filter.util;
 
 /**
- * Enumeration of the possible parameter names.
+ * Cache HTTP response headers.
  * 
  * @author Samuel Santos
  * @version $Revision$
  */
-public enum CacheParameter {
-    /** Defines whether a component is static or not. */
-    STATIC("static"),
-    /** Cache directive to control where the response may be cached. */
-    PRIVATE("private"),
-    /** Cache directive to set an expiration date relative to the current date. */
-    EXPIRATION_TIME("expirationTime");
+public enum HTTPCacheHeader {
+    /**
+     * The Cache-Control general-header field is used to specify directives that MUST be obeyed by all caching
+     * mechanisms along the request/response chain.
+     */
+    CACHE_CONTROL("Cache-Control"),
+    /** The Expires entity-header field gives the date/time after which the response is considered stale. */
+    EXPIRES("Expires"),
+    /**
+     * The Pragma general-header field is used to include implementation- specific directives that might apply to any
+     * recipient along the request/response chain.
+     */
+    PRAGMA("Pragma"),
+    /** The ETag response-header field provides the current value of the entity tag for the requested variant. */
+    ETAG("ETag");
 
     private String name;
 
-    private CacheParameter(String name) {
+    private HTTPCacheHeader(String name) {
         this.name = name;
     }
 

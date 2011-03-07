@@ -27,6 +27,8 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
 
+import com.samaxes.filter.util.HTTPCacheHeader;
+
 /**
  * Completely disable browser caching.
  * 
@@ -57,8 +59,8 @@ public class NoCacheFilter implements Filter {
         HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse;
 
         // set cache directives
-        httpServletResponse.setDateHeader("Expires", 0L);
-        httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+        httpServletResponse.setHeader(HTTPCacheHeader.CACHE_CONTROL.getName(), "no-cache, no-store, must-revalidate");
+        httpServletResponse.setDateHeader(HTTPCacheHeader.EXPIRES.getName(), 0L);
 
         filterChain.doFilter(servletRequest, servletResponse);
     }

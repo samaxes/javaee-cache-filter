@@ -27,8 +27,9 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
 
-import com.samaxes.filter.util.CacheParameter;
+import com.samaxes.filter.util.CacheConfigParameter;
 import com.samaxes.filter.util.Cacheability;
+import com.samaxes.filter.util.HTTPCacheHeader;
 
 /**
  * Filter responsible for browser caching.
@@ -52,15 +53,15 @@ public class CacheFilter implements Filter {
      * @throws ServletException to inform the container to not place the filter into service
      */
     public void init(FilterConfig filterConfig) throws ServletException {
-        cacheability = (Boolean.valueOf(filterConfig.getInitParameter(CacheParameter.PRIVATE.getName()))) ? Cacheability.PRIVATE
+        cacheability = (Boolean.valueOf(filterConfig.getInitParameter(CacheConfigParameter.PRIVATE.getName()))) ? Cacheability.PRIVATE
                 : Cacheability.PUBLIC;
-        isStatic = Boolean.valueOf(filterConfig.getInitParameter(CacheParameter.STATIC.getName()));
+        isStatic = Boolean.valueOf(filterConfig.getInitParameter(CacheConfigParameter.STATIC.getName()));
 
         try {
-            seconds = Long.valueOf(filterConfig.getInitParameter(CacheParameter.EXPIRATION_TIME.getName()));
+            seconds = Long.valueOf(filterConfig.getInitParameter(CacheConfigParameter.EXPIRATION_TIME.getName()));
         } catch (NumberFormatException e) {
             throw new ServletException(new StringBuilder("The initialization parameter ").append(
-                    CacheParameter.EXPIRATION_TIME.getName()).append(" is missing for filter ").append(
+                    CacheConfigParameter.EXPIRATION_TIME.getName()).append(" is missing for filter ").append(
                     filterConfig.getFilterName()).append(".").toString());
         }
     }
@@ -75,22 +76,23 @@ public class CacheFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
             throws IOException, ServletException {
         HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse;
-        StringBuilder cacheControl = new StringBuilder(cacheability.getValue());
+        StringBuilder cacheControl = new StringBuilder(cacheability.getValue()).append(", max-age=").append(seconds);
 
         if (!isStatic) {
             cacheControl.append(", must-revalidate");
         }
 
-        // set cache directives
-        httpServletResponse.setDateHeader("Expires", System.currentTimeMillis() + seconds * 1000L);
-        httpServletResponse.setHeader("Cache-Control", cacheControl.toString());
+        // Set cache directives
+        httpServletResponse.setHeader(HTTPCacheHeader.CACHE_CONTROL.getName(), cacheControl.toString());
+        httpServletResponse.setDateHeader(HTTPCacheHeader.EXPIRES.getName(), System.currentTimeMillis() + seconds
+                * 1000L);
 
         /*
          * By default, some servers (e.g. Tomcat) will set headers on any SSL content to deny caching. Setting the
          * Pragma header to null or to an empty string takes care of user-agents implementing HTTP 1.0.
          */
         if (httpServletResponse.containsHeader("Pragma")) {
-            httpServletResponse.setHeader("Pragma", null);
+            httpServletResponse.setHeader(HTTPCacheHeader.PRAGMA.getName(), null);
         }
 
         filterChain.doFilter(servletRequest, servletResponse);
