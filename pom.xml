@@ -10,7 +10,7 @@
 
     <groupId>com.samaxes.filter</groupId>
     <artifactId>cachefilter</artifactId>
-    <version>2.0</version>
+    <version>2.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>Java EE Cache Filter</name>
@@ -47,9 +47,9 @@
         <url>http://code.google.com/p/cache-filter/issues/list</url>
     </issueManagement>
     <scm>
-        <connection>scm:svn:http://cache-filter.googlecode.com/svn/tags/cachefilter-2.0</connection>
-        <developerConnection>scm:svn:https://cache-filter.googlecode.com/svn/tags/cachefilter-2.0</developerConnection>
-        <url>http://cache-filter.googlecode.com/svn/tags/cachefilter-2.0</url>
+        <connection>scm:svn:http://cache-filter.googlecode.com/svn/trunk</connection>
+        <developerConnection>scm:svn:https://cache-filter.googlecode.com/svn/trunk</developerConnection>
+        <url>http://cache-filter.googlecode.com/svn/trunk</url>
     </scm>
 
     <prerequisites>
