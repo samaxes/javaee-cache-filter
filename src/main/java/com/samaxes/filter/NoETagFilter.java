@@ -55,9 +55,9 @@ public class NoETagFilter implements Filter {
      * @param servletResponse assists a servlet in sending a response to the client
      * @param filterChain gives a view into the invocation chain of a filtered request
      */
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException,
-            ServletException {
-        chain.doFilter(request, new HttpServletResponseWrapper((HttpServletResponse) response) {
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
+            throws IOException, ServletException {
+        filterChain.doFilter(servletRequest, new HttpServletResponseWrapper((HttpServletResponse) servletResponse) {
             public void setHeader(String name, String value) {
                 if (!HTTPCacheHeader.ETAG.getName().equalsIgnoreCase(name)) {
                     super.setHeader(name, value);
