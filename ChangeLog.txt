@@ -3,7 +3,7 @@
 ========================
 
 == 2.0 ==
- * Added NoEtagFilter class to disable ETag HTTP header set by the DefaultServlet in Tomcat.
+ * Added NoETagFilter class to disable HTTP ETag header set by the DefaultServlet in Tomcat.
  * Added NoCacheFilter class to completely disable browser caching.
  * Replaced privacy<String> parameter by private<Boolean>. Cache directive to control where the response may be cached.
  * Added static<Boolean> parameter. Conditional requests are not required for static components.
