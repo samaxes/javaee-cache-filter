@@ -1,5 +1,4 @@
 /*
- * $Id$
  *
  * Copyright 2011 samaxes.com
  * 
@@ -27,37 +26,53 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
-
 import com.samaxes.filter.util.HTTPCacheHeader;
 
 /**
- * Filter responsible for disabling ETag header from the HTTP response.
- * 
+ * <p>
+ * Filter responsible for disabling ETag header from the HTTP response.<p>
+ * <p>
+ * Sample Configuration</p>
+ * <pre>
+ * &lt;filter&gt;
+ * &lt;filter-name&gt;noEtag&lt;/filter-name&gt;
+ * &lt;filter-class&gt;com.samaxes.filter.NoETagFilter&lt;/filter-class&gt;
+ * &lt;/filter&gt;
+ * </pre>
+ * <p>
+ * Map the filter to Tomcat&#x27;s DefaultServlet</p>
+ * <pre>
+ * &lt;filter-mapping&gt;
+ * &lt;filter-name&gt;noEtag&lt;/filter-name&gt;
+ * &lt;url-pattern&gt;/*&lt;/url-pattern&gt;
+ * &lt;/filter-mapping&gt;
+ * </pre>
+ *
  * @author Samuel Santos
- * @version $Revision$
+ * @author John Yeary
+ * @version 2.0.1
  */
 public class NoETagFilter implements Filter {
 
     /**
-     * Place this filter into service.
-     * 
-     * @param filterConfig the filter configuration object used by a servlet container to pass information to a filter
-     *        during initialization
-     * @throws ServletException to inform the container to not place the filter into service
+     * {@inheritDoc}
      */
+    @Override
     public void init(FilterConfig filterConfig) throws ServletException {
     }
 
     /**
+     *
+     * {@inheritDoc}
+     *
      * Disables ETag HTTP header.
-     * 
-     * @param servletRequest provides data including parameter name and values, attributes, and an input stream
-     * @param servletResponse assists a servlet in sending a response to the client
-     * @param filterChain gives a view into the invocation chain of a filtered request
+     *
      */
+    @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
             throws IOException, ServletException {
         filterChain.doFilter(servletRequest, new HttpServletResponseWrapper((HttpServletResponse) servletResponse) {
+            @Override
             public void setHeader(String name, String value) {
                 if (!HTTPCacheHeader.ETAG.getName().equalsIgnoreCase(name)) {
                     super.setHeader(name, value);
@@ -67,8 +82,9 @@ public class NoETagFilter implements Filter {
     }
 
     /**
-     * Take this filter out of service.
+     * {@inheritDoc}
      */
+    @Override
     public void destroy() {
     }
 }
