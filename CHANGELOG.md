@@ -1,5 +1,9 @@
 # Java EE Cache Filter
 
+## 2.0.1
+
+* Move from Google Project Hosting (https://code.google.com/p/cache-filter/) to GitHub (https://github.com/samaxes/javaee-cache-filter).
+
 ## 2.0
 
 * Added `NoETagFilter` class to disable HTTP `ETag` header set by the `DefaultServlet` in Tomcat.
