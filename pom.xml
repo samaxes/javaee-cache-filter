@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <parent>
         <groupId>org.sonatype.oss</groupId>
         <artifactId>oss-parent</artifactId>
         <version>7</version>
     </parent>
-
+    
     <groupId>com.samaxes.filter</groupId>
     <artifactId>cachefilter</artifactId>
     <version>2.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
-
     <name>Java EE Cache Filter</name>
     <description>Java EE Cache Filter is a Servlet Filter that allows you to set HTTP headers in order to enable or disable browser caching.</description>
     <url>https://github.com/samaxes/javaee-cache-filter</url>
     <inceptionYear>2007</inceptionYear>
+    
     <organization>
         <name>samaxes</name>
         <url>http://www.samaxes.com/</url>
     </organization>
+    
     <licenses>
         <license>
             <name>The Apache Software License, Version 2.0</name>
@@ -35,10 +35,22 @@
             <name>Samuel Santos</name>
             <url>http://www.samaxes.com/</url>
             <roles>
-                <role>project owner</role>
-                <role>developer</role>
+                <role>Project Owner</role>
+                <role>Developer</role>
             </roles>
             <timezone>0</timezone>
+        </developer>
+        <developer>
+            <id>jyeary</id>
+            <name>John Yeary</name>
+            <email>jyeary@bluelotussoftware.com</email>
+            <url>http://javaevangelist.blogspot.com</url>
+            <organization>Blue Lotus Software, LLC.</organization>
+            <organizationUrl>http://code.bluelotussoftware.com</organizationUrl>
+            <timezone>-5</timezone>
+            <roles>
+                <role>Developer</role>
+            </roles>
         </developer>
     </developers>
 
@@ -46,6 +58,7 @@
         <system>GitHub</system>
         <url>https://github.com/samaxes/javaee-cache-filter/issues</url>
     </issueManagement>
+    
     <scm>
         <connection>scm:git:git://github.com/samaxes/javaee-cache-filter.git</connection>
         <developerConnection>scm:git:git@github.com:samaxes/javaee-cache-filter.git</developerConnection>
@@ -91,25 +104,51 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.2.1</version>
+                <executions>
+                    <execution>
+                        <id>sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.9.1</version>
+                <executions>
+                    <execution>
+                        <id>javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-release-plugin</artifactId>
             </plugin>
         </plugins>
     </build>
 
     <dependencies>
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
-            <version>2.5</version>
+        <dependency>  
+            <groupId>javax</groupId>    
+            <artifactId>javaee-web-api</artifactId>    
+            <version>7.0</version> 
             <scope>provided</scope>
-        </dependency>
+        </dependency> 
     </dependencies>
 
     <properties>
         <github.global.server>github</github.global.server>
         <project.build.resourceEncoding>ISO-8859-1</project.build.resourceEncoding>
-        <maven.compiler.source>1.5</maven.compiler.source>
-        <maven.compiler.target>1.5</maven.compiler.target>
+        <maven.compiler.source>1.7</maven.compiler.source>
+        <maven.compiler.target>1.7</maven.compiler.target>
         <skipTests>true</skipTests>
     </properties>
 </project>
