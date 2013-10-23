@@ -1,5 +1,4 @@
 /*
- * $Id$
  *
  * Copyright 2011 samaxes.com
  * 
@@ -19,19 +18,27 @@ package com.samaxes.filter.util;
 
 /**
  * Enumeration of the possible configuration parameters.
- * 
+ *
  * @author Samuel Santos
- * @version $Revision$
+ * @author John Yeary
+ * @version 2.0.1
  */
 public enum CacheConfigParameter {
-    /** Defines whether a component is static or not. */
+
+    /**
+     * Defines whether a component is static or not.
+     */
     STATIC("static"),
-    /** Cache directive to control where the response may be cached. */
+    /**
+     * Cache directive to control where the response may be cached.
+     */
     PRIVATE("private"),
-    /** Cache directive to set an expiration date relative to the current date. */
+    /**
+     * Cache directive to set an expiration date relative to the current date.
+     */
     EXPIRATION_TIME("expirationTime");
 
-    private String name;
+    private final String name;
 
     private CacheConfigParameter(String name) {
         this.name = name;
@@ -39,7 +46,7 @@ public enum CacheConfigParameter {
 
     /**
      * Gets the parameter name.
-     * 
+     *
      * @return the parameter name
      */
     public String getName() {
