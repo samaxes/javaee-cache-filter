@@ -1,5 +1,4 @@
 /*
- * $Id$
  *
  * Copyright 2011 samaxes.com
  * 
@@ -18,7 +17,6 @@
 package com.samaxes.filter;
 
 import java.io.IOException;
-
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -26,34 +24,49 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
-
 import com.samaxes.filter.util.HTTPCacheHeader;
 
 /**
- * Completely disable browser caching.
- * 
+ * <p>
+ * Completely disable browser caching.</p>
+ * <p>
+ * Sample Configuration</p>
+ * <pre>
+ * &lt;filter&gt;
+ * &lt;filter-name&gt;noCache&lt;/filter-name&gt;
+ * &lt;filter-class&gt;com.samaxes.filter.NoCacheFilter&lt;/filter-class&gt;
+ * &lt;/filter&gt;
+ * </pre>
+ * <p>Map the filter to serve your dynamic resources</p>
+ * <pre>
+ * &lt;filter-mapping&gt;
+ * &lt;filter-name&gt;noCache&lt;/filter-name&gt;
+ * &lt;servlet-name&gt;MyServlet&lt;/servlet-name&gt;
+ * &lt;dispatcher&gt;REQUEST&lt;/dispatcher&gt;
+ * &lt;dispatcher&gt;FORWARD&lt;/dispatcher&gt;
+ * &lt;/filter-mapping&gt;
+ * </pre>
+ *
  * @author Samuel Santos
- * @version $Revision$
+ * @author John Yeary
+ * @version 2.0.1
  */
 public class NoCacheFilter implements Filter {
 
     /**
-     * Place this filter into service.
-     * 
-     * @param filterConfig the filter configuration object used by a servlet container to pass information to a filter
-     *        during initialization
-     * @throws ServletException to inform the container to not place the filter into service
+     * {@inheritDoc}
      */
+    @Override
     public void init(FilterConfig filterConfig) throws ServletException {
     }
 
     /**
+     * {@inheritDoc}
+     *
      * Set cache header directives.
-     * 
-     * @param servletRequest provides data including parameter name and values, attributes, and an input stream
-     * @param servletResponse assists a servlet in sending a response to the client
-     * @param filterChain gives a view into the invocation chain of a filtered request
+     *
      */
+    @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
             throws IOException, ServletException {
         HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse;
@@ -66,8 +79,9 @@ public class NoCacheFilter implements Filter {
     }
 
     /**
-     * Take this filter out of service.
+     * {@inheritDoc}
      */
+    @Override
     public void destroy() {
     }
 }
