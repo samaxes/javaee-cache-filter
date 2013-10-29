@@ -1,13 +1,12 @@
 /*
- *
  * Copyright 2011 samaxes.com
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -26,31 +25,37 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
+
 import com.samaxes.filter.util.HTTPCacheHeader;
 
 /**
  * <p>
- * Filter responsible for disabling ETag header from the HTTP response.<p>
+ * Filter responsible for disabling ETag header from the HTTP response.
  * <p>
- * Sample Configuration</p>
+ * <p>
+ * Example configuration:
+ * </p>
+ *
  * <pre>
  * &lt;filter&gt;
- * &lt;filter-name&gt;noEtag&lt;/filter-name&gt;
- * &lt;filter-class&gt;com.samaxes.filter.NoETagFilter&lt;/filter-class&gt;
+ *     &lt;filter-name&gt;noEtag&lt;/filter-name&gt;
+ *     &lt;filter-class&gt;com.samaxes.filter.NoETagFilter&lt;/filter-class&gt;
  * &lt;/filter&gt;
  * </pre>
  * <p>
- * Map the filter to Tomcat&#x27;s DefaultServlet</p>
+ * Map the filter to Tomcat&#x27;s {@code DefaultServlet}:
+ * </p>
+ *
  * <pre>
  * &lt;filter-mapping&gt;
- * &lt;filter-name&gt;noEtag&lt;/filter-name&gt;
- * &lt;url-pattern&gt;/*&lt;/url-pattern&gt;
+ *     &lt;filter-name&gt;noEtag&lt;/filter-name&gt;
+ *     &lt;url-pattern&gt;/*&lt;/url-pattern&gt;
  * &lt;/filter-mapping&gt;
  * </pre>
  *
  * @author Samuel Santos
  * @author John Yeary
- * @version 2.0.1
+ * @version 2.1.0
  */
 public class NoETagFilter implements Filter {
 
@@ -62,11 +67,7 @@ public class NoETagFilter implements Filter {
     }
 
     /**
-     *
-     * {@inheritDoc}
-     *
-     * Disables ETag HTTP header.
-     *
+     * Disables {@code ETag} HTTP header. {@inheritDoc}
      */
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)

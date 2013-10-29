@@ -35,7 +35,7 @@ Add Java EE Cache Filter dependency to your `pom.xml` file:
 
 ## System Requirements
   
-Java EE Cache Filter works with Java EE 5 or newer.
+Java EE Cache Filter works with Java EE 6 or newer.
 
 ## License
 
