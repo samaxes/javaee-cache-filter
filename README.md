@@ -1,7 +1,6 @@
 # Java EE Cache Filter
 
-Java EE Cache Filter provides a collection of common Servlet filters for Java web applications based on the [Servlet 2.5 specification](http://jcp.org/en/jsr/detail?id=154).
-It allows you to transparently set HTTP cache headers in order to enable browser caching.
+Java EE Cache Filter provides a collection of common Servlet filters for Java web applications allowing you to transparently set HTTP cache headers in order to enable browser caching.
 
 ## Why does cache matter?
 
