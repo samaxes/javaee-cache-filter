@@ -39,4 +39,4 @@ Java EE Cache Filter works with Java EE 6 or newer.
 
 ## License
 
-This distribution is licensed under the terms of the Apache License, Version 2.0 (see [LICENSE](LICENSE)).
+This distribution is licensed under the terms of the Apache License, Version 2.0 (see LICENSE.txt).
