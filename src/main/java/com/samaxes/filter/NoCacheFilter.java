@@ -1,4 +1,7 @@
 /*
+ * Java EE Cache Filter
+ * https://github.com/samaxes/javaee-cache-filter
+ *
  * Copyright 2011 samaxes.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
