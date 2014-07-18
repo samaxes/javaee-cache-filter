@@ -3,7 +3,7 @@
 ## 2.1.0
 
 * Move from Google Project Hosting (https://code.google.com/p/cache-filter/) to GitHub (https://github.com/samaxes/javaee-cache-filter).
-* Update compiler to Java 1.6.
+* Update compiler to Java 6.
 * Replace Servlet API 2.5 dependency with Java EE 6 Web API.
 
 ## 2.0
