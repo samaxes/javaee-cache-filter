@@ -126,6 +126,11 @@
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <links>
+                        <link>http://docs.oracle.com/javaee/6/api/</link>
+                    </links>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
