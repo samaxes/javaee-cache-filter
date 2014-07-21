@@ -58,7 +58,7 @@ import com.samaxes.filter.util.HTTPCacheHeader;
  *
  * @author Samuel Santos
  * @author John Yeary
- * @version 2.1.0
+ * @version 2.2.0
  */
 public class NoETagFilter implements Filter {
 
@@ -70,7 +70,10 @@ public class NoETagFilter implements Filter {
     }
 
     /**
-     * Disables {@code ETag} HTTP header. {@inheritDoc}
+     * <p>
+     * Disables {@code ETag} HTTP header.
+     * </p>
+     * {@inheritDoc}
      */
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)

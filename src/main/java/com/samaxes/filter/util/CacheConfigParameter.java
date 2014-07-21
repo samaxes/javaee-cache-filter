@@ -23,21 +23,21 @@ package com.samaxes.filter.util;
  *
  * @author Samuel Santos
  * @author John Yeary
- * @version 2.1.0
+ * @version 2.2.0
  */
 public enum CacheConfigParameter {
     /**
-     * Defines whether a component is static or not.
+     * Cache directive to set an expiration time, in seconds, relative to the current date.
      */
-    STATIC("static"),
+    EXPIRATION("expiration"),
     /**
      * Cache directive to control where the response may be cached.
      */
     PRIVATE("private"),
     /**
-     * Cache directive to set an expiration date relative to the current date.
+     * Cache directive to define whether conditional requests are required or not for stale responses.
      */
-    EXPIRATION_TIME("expirationTime");
+    MUST_REVALIDATE("must-revalidate");
 
     private final String name;
 

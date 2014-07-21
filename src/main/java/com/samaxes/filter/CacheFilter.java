@@ -27,6 +27,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletResponseWrapper;
 
 import com.samaxes.filter.util.CacheConfigParameter;
 import com.samaxes.filter.util.Cacheability;
@@ -137,61 +138,85 @@ import com.samaxes.filter.util.HTTPCacheHeader;
  *
  * @author Samuel Santos
  * @author John Yeary
- * @version 2.1.0
+ * @version 2.2.0
  */
 public class CacheFilter implements Filter {
 
+    private long expiration;
+
     private Cacheability cacheability;
 
-    private boolean isStatic;
-
-    private long seconds;
+    private boolean mustRevalidate;
 
     /**
      * {@inheritDoc}
      */
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        cacheability = (Boolean.valueOf(filterConfig.getInitParameter(CacheConfigParameter.PRIVATE.getName()))) ? Cacheability.PRIVATE
-                : Cacheability.PUBLIC;
-        isStatic = Boolean.valueOf(filterConfig.getInitParameter(CacheConfigParameter.STATIC.getName()));
-
-        try {
-            seconds = Long.valueOf(filterConfig.getInitParameter(CacheConfigParameter.EXPIRATION_TIME.getName()));
-        } catch (NumberFormatException e) {
-            throw new ServletException(new StringBuilder("The initialization parameter ")
-                    .append(CacheConfigParameter.EXPIRATION_TIME.getName()).append(" is missing for filter ")
+        if (filterConfig.getInitParameter("expirationTime") != null) {
+            throw new ServletException(new StringBuilder(
+                    "The initialization parameter expirationTime has been replaced with ")
+                    .append(CacheConfigParameter.EXPIRATION.getName()).append(" for the filter ")
                     .append(filterConfig.getFilterName()).append(".").toString());
         }
+        if (filterConfig.getInitParameter("static") != null) {
+            throw new ServletException(new StringBuilder("The initialization parameter static has been replaced with ")
+                    .append(CacheConfigParameter.MUST_REVALIDATE.getName()).append(" for the filter ")
+                    .append(filterConfig.getFilterName()).append(".").toString());
+        }
+
+        try {
+            expiration = Long.valueOf(filterConfig.getInitParameter(CacheConfigParameter.EXPIRATION.getName()));
+        } catch (NumberFormatException e) {
+            throw new ServletException(new StringBuilder("The initialization parameter ")
+                    .append(CacheConfigParameter.EXPIRATION.getName())
+                    .append(" is invalid or is missing for the filter ").append(filterConfig.getFilterName())
+                    .append(".").toString());
+        }
+        cacheability = Boolean.valueOf(filterConfig.getInitParameter(CacheConfigParameter.PRIVATE.getName())) ? Cacheability.PRIVATE
+                : Cacheability.PUBLIC;
+        mustRevalidate = Boolean.valueOf(filterConfig.getInitParameter(CacheConfigParameter.MUST_REVALIDATE.getName()));
     }
 
     /**
-     * Set cache header directives. {@inheritDoc}
+     * <p>
+     * Set HTTP cache headers.
+     * </p>
+     * {@inheritDoc}
      */
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
             throws IOException, ServletException {
         HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse;
-        StringBuilder cacheControl = new StringBuilder(cacheability.getValue()).append(", max-age=").append(seconds);
-
-        if (!isStatic) {
+        StringBuilder cacheControl = new StringBuilder(cacheability.getValue()).append(", max-age=").append(expiration);
+        if (mustRevalidate) {
             cacheControl.append(", must-revalidate");
         }
 
         // Set cache directives
         httpServletResponse.setHeader(HTTPCacheHeader.CACHE_CONTROL.getName(), cacheControl.toString());
-        httpServletResponse.setDateHeader(HTTPCacheHeader.EXPIRES.getName(), System.currentTimeMillis() + seconds
+        httpServletResponse.setDateHeader(HTTPCacheHeader.EXPIRES.getName(), System.currentTimeMillis() + expiration
                 * 1000L);
 
         /*
-         * By default, some servers (e.g. Tomcat) will set headers on any SSL content to deny caching. Setting the
-         * Pragma header to null or to an empty string takes care of user-agents implementing HTTP 1.0.
+         * By default, some servers (e.g. Tomcat) will set headers on any SSL content to deny caching. Omitting the
+         * Pragma header takes care of user-agents implementing HTTP/1.0.
          */
-        if (httpServletResponse.containsHeader("Pragma")) {
-            httpServletResponse.setHeader(HTTPCacheHeader.PRAGMA.getName(), null);
-        }
+        filterChain.doFilter(servletRequest, new HttpServletResponseWrapper(httpServletResponse) {
+            @Override
+            public void addHeader(String name, String value) {
+                if (!HTTPCacheHeader.PRAGMA.getName().equalsIgnoreCase(name)) {
+                    super.addHeader(name, value);
+                }
+            }
 
-        filterChain.doFilter(servletRequest, servletResponse);
+            @Override
+            public void setHeader(String name, String value) {
+                if (!HTTPCacheHeader.PRAGMA.getName().equalsIgnoreCase(name)) {
+                    super.setHeader(name, value);
+                }
+            }
+        });
     }
 
     /**

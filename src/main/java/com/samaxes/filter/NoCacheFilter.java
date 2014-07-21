@@ -59,7 +59,7 @@ import com.samaxes.filter.util.HTTPCacheHeader;
  *
  * @author Samuel Santos
  * @author John Yeary
- * @version 2.1.0
+ * @version 2.2.0
  */
 public class NoCacheFilter implements Filter {
 
@@ -71,7 +71,10 @@ public class NoCacheFilter implements Filter {
     }
 
     /**
-     * Set cache header directives. {@inheritDoc}
+     * <p>
+     * Set HTTP cache headers.
+     * </p>
+     * {@inheritDoc}
      */
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)

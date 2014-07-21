@@ -23,7 +23,7 @@ package com.samaxes.filter.util;
  *
  * @author Samuel Santos
  * @author John Yeary
- * @version 2.1.0
+ * @version 2.2.0
  */
 public enum Cacheability {
     /**
