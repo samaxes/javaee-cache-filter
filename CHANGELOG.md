@@ -1,5 +1,10 @@
 # Java EE Cache Filter
 
+## 2.3.0
+
+* Add support for `Vary` HTTP header in `CacheFilter` responses (#2).
+* Update and improve Javadocs.
+
 ## 2.2.0
 
 * Use a `HttpServletResponseWrapper` to remove HTTP/1.0 `Pragma` header.
@@ -8,7 +13,7 @@
 
 ## 2.1.0
 
-* Move from Google Project Hosting (https://code.google.com/p/cache-filter/) to GitHub (https://github.com/samaxes/javaee-cache-filter).
+* Move from [Google Project Hosting](https://code.google.com/p/cache-filter/) to [GitHub](https://github.com/samaxes/javaee-cache-filter).
 * Update compiler to Java 6.
 * Replace Servlet API 2.5 dependency with Java EE 6 Web API.
 

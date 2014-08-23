@@ -33,10 +33,15 @@ import com.samaxes.filter.util.HTTPCacheHeader;
 
 /**
  * <p>
- * Filter responsible for disabling ETag header from the HTTP response.
+ * Filter allowing to disable {@code ETag} header from a HTTP response.
  * <p>
+ * <h2>Sample configuration</h2>
  * <p>
- * Example configuration:
+ * <strong>Note:</strong> This configuration describes how to disable HTTP {@code ETag} header set by the
+ * <strong>DefaultServlet</strong> in Tomcat.
+ * </p>
+ * <p>
+ * Declare the filter in your web descriptor file {@code web.xml}:
  * </p>
  *
  * <pre>
@@ -46,19 +51,19 @@ import com.samaxes.filter.util.HTTPCacheHeader;
  * &lt;/filter&gt;
  * </pre>
  * <p>
- * Map the filter to Tomcat&#x27;s {@code DefaultServlet}:
+ * Map the filter to Tomcat&#x27;s <strong>DefaultServlet</strong>:
  * </p>
  *
  * <pre>
  * &lt;filter-mapping&gt;
  *     &lt;filter-name&gt;noEtag&lt;/filter-name&gt;
- *     &lt;url-pattern&gt;/*&lt;/url-pattern&gt;
+ *     &lt;url-pattern&gt;default&lt;/url-pattern&gt;
  * &lt;/filter-mapping&gt;
  * </pre>
  *
  * @author Samuel Santos
  * @author John Yeary
- * @version 2.2.0
+ * @version 2.3.0
  */
 public class NoETagFilter implements Filter {
 

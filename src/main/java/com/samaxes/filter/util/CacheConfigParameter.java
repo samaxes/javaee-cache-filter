@@ -23,7 +23,7 @@ package com.samaxes.filter.util;
  *
  * @author Samuel Santos
  * @author John Yeary
- * @version 2.2.0
+ * @version 2.3.0
  */
 public enum CacheConfigParameter {
     /**
@@ -37,7 +37,12 @@ public enum CacheConfigParameter {
     /**
      * Cache directive to define whether conditional requests are required or not for stale responses.
      */
-    MUST_REVALIDATE("must-revalidate");
+    MUST_REVALIDATE("must-revalidate"),
+    /**
+     * Cache directive to instructs proxies to cache different versions of the same resource based on specific
+     * request-header fields.
+     */
+    VARY("vary");
 
     private final String name;
 

@@ -35,26 +35,29 @@ import com.samaxes.filter.util.HTTPCacheHeader;
 
 /**
  * <p>
- * Filter responsible for browser caching.
+ * Filter allowing to enable browser caching.
  * </p>
  * <table border="1">
  * <tr>
  * <th>Option</th>
  * <th>Required</th>
  * <th>Default</th>
+ * <th>Since</th>
  * <th>Description</th>
  * </tr>
  * <tr>
- * <td>static</td>
- * <td>No</td>
- * <td>false</td>
- * <td>Defines whether a component is static or not. Conditional requests <sup>(1)</sup> are not required for static
- * components.</td>
+ * <td>{@code expiration}</td>
+ * <td>Yes</td>
+ * <td>--</td>
+ * <td>2.2.0</td>
+ * <td>Cache directive to set an expiration time, in seconds, relative to the current date. Used for both
+ * {@code Cache-Control} and {@code Expires} HTTP headers.</td>
  * </tr>
  * <tr>
- * <td>private</td>
+ * <td>{@code private}</td>
  * <td>No</td>
- * <td>false</td>
+ * <td>{@code false}</td>
+ * <td>2.0.0</td>
  * <td>Cache directive to control where the response may be cached.
  * <ul>
  * <li><code>false</code> indicates that the response MAY be cached by any cache.</li>
@@ -64,19 +67,43 @@ import com.samaxes.filter.util.HTTPCacheHeader;
  * </td>
  * </tr>
  * <tr>
- * <td>expirationTime</td>
- * <td>Yes</td>
- * <td>-</td>
- * <td>Cache directive to set an expiration time, in seconds, relative to the current date.</td>
+ * <td>{@code must-revalidate}</td>
+ * <td>No</td>
+ * <td>{@code false}</td>
+ * <td>2.2.0</td>
+ * <td>Cache directive to define whether conditional requests<sup>(1)</sup> are required or not for stale responses.
+ * When the {@code must-revalidate} directive is present in a response received by a cache, that cache MUST NOT use the
+ * entry after it becomes stale to respond to a subsequent request without first revalidating it with the origin server.
+ * </td>
+ * </tr>
+ * <tr>
+ * <td>{@code vary}</td>
+ * <td>No</td>
+ * <td>--</td>
+ * <td>2.3.0</td>
+ * <td>Cache directive to instructs proxies to cache different versions of the same resource based on specific
+ * request-header fields. Some possible {@code Vary} header values include:
+ * <ul>
+ * <li><code>Accept-Encoding</code> instructs proxies to cache two versions of a compressible resource: one compressed,
+ * and one uncompressed.</li>
+ * <li><code>Accept-Language</code> instructs proxies to cache different versions of a resource based on the language of
+ * a given request.</li>
+ * <li><code>Accept</code> instructs proxies to cache different versions of a resource based on the response format of a
+ * given request (e.g. {@code Accept: application/xml} or {@code Accept: application/json}).</li>
+ * </ul>
+ * <strong>Warn:</strong> if your server does vary responses but does not indicate so via the {@code Vary} header it may
+ * result in cache corruption: <a href="http://www.subbu.org/blog/2007/12/vary-header-for-restful-applications">Vary
+ * Header for RESTful Applications</a>.</td>
  * </tr>
  * </table>
  * <p>
  * <sup>(1)</sup> If a component is already in the browser's cache and is being re-requested, the browser will pass the
- * Last-Modified date in the request header. This is called a conditional GET request and if the component has not been
- * modified, the server will return a 304 Not Modified response.
+ * {@code Last-Modified} date in the request header. This is called a <em>conditional GET request</em> and if the
+ * component has not been modified, the server will return a {@code 304 Not Modified} response.
  * </p>
+ * <h2>Sample configuration:</h2>
  * <p>
- * Example configuration:
+ * Declare the filter in your web descriptor file {@code web.xml}:
  * </p>
  *
  * <pre>
@@ -84,11 +111,7 @@ import com.samaxes.filter.util.HTTPCacheHeader;
  *     &lt;filter-name&gt;imagesCache&lt;/filter-name&gt;
  *     &lt;filter-class&gt;com.samaxes.filter.CacheFilter&lt;/filter-class&gt;
  *     &lt;init-param&gt;
- *         &lt;param-name&gt;static&lt;/param-name&gt;
- *         &lt;param-value&gt;true&lt;/param-value&gt;
- *     &lt;/init-param&gt;
- *     &lt;init-param&gt;
- *         &lt;param-name&gt;expirationTime&lt;/param-name&gt;
+ *         &lt;param-name&gt;expiration&lt;/param-name&gt;
  *         &lt;param-value&gt;2592000&lt;/param-value&gt;
  *     &lt;/init-param&gt;
  * &lt;/filter&gt;
@@ -97,8 +120,12 @@ import com.samaxes.filter.util.HTTPCacheHeader;
  *     &lt;filter-name&gt;cssCache&lt;/filter-name&gt;
  *     &lt;filter-class&gt;com.samaxes.filter.CacheFilter&lt;/filter-class&gt;
  *     &lt;init-param&gt;
- *         &lt;param-name&gt;expirationTime&lt;/param-name&gt;
+ *         &lt;param-name&gt;expiration&lt;/param-name&gt;
  *         &lt;param-value&gt;604800&lt;/param-value&gt;
+ *     &lt;/init-param&gt;
+ *     &lt;init-param&gt;
+ *         &lt;param-name&gt;vary&lt;/param-name&gt;
+ *         &lt;param-value&gt;Accept-Encoding&lt;/param-value&gt;
  *     &lt;/init-param&gt;
  * &lt;/filter&gt;
  *
@@ -106,12 +133,12 @@ import com.samaxes.filter.util.HTTPCacheHeader;
  *     &lt;filter-name&gt;jsCache&lt;/filter-name&gt;
  *     &lt;filter-class&gt;com.samaxes.filter.CacheFilter&lt;/filter-class&gt;
  *     &lt;init-param&gt;
- *         &lt;param-name&gt;private&lt;/param-name&gt;
- *         &lt;param-value&gt;true&lt;/param-value&gt;
+ *         &lt;param-name&gt;expiration&lt;/param-name&gt;
+ *         &lt;param-value&gt;216000&lt;/param-value&gt;
  *     &lt;/init-param&gt;
  *     &lt;init-param&gt;
- *         &lt;param-name&gt;expirationTime&lt;/param-name&gt;
- *         &lt;param-value&gt;216000&lt;/param-value&gt;
+ *         &lt;param-name&gt;private&lt;/param-name&gt;
+ *         &lt;param-value&gt;true&lt;/param-value&gt;
  *     &lt;/init-param&gt;
  * &lt;/filter&gt;
  * </pre>
@@ -138,7 +165,7 @@ import com.samaxes.filter.util.HTTPCacheHeader;
  *
  * @author Samuel Santos
  * @author John Yeary
- * @version 2.2.0
+ * @version 2.3.0
  */
 public class CacheFilter implements Filter {
 
@@ -148,23 +175,13 @@ public class CacheFilter implements Filter {
 
     private boolean mustRevalidate;
 
+    private String vary;
+
     /**
      * {@inheritDoc}
      */
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        if (filterConfig.getInitParameter("expirationTime") != null) {
-            throw new ServletException(new StringBuilder(
-                    "The initialization parameter expirationTime has been replaced with ")
-                    .append(CacheConfigParameter.EXPIRATION.getName()).append(" for the filter ")
-                    .append(filterConfig.getFilterName()).append(".").toString());
-        }
-        if (filterConfig.getInitParameter("static") != null) {
-            throw new ServletException(new StringBuilder("The initialization parameter static has been replaced with ")
-                    .append(CacheConfigParameter.MUST_REVALIDATE.getName()).append(" for the filter ")
-                    .append(filterConfig.getFilterName()).append(".").toString());
-        }
-
         try {
             expiration = Long.valueOf(filterConfig.getInitParameter(CacheConfigParameter.EXPIRATION.getName()));
         } catch (NumberFormatException e) {
@@ -176,6 +193,7 @@ public class CacheFilter implements Filter {
         cacheability = Boolean.valueOf(filterConfig.getInitParameter(CacheConfigParameter.PRIVATE.getName())) ? Cacheability.PRIVATE
                 : Cacheability.PUBLIC;
         mustRevalidate = Boolean.valueOf(filterConfig.getInitParameter(CacheConfigParameter.MUST_REVALIDATE.getName()));
+        vary = filterConfig.getInitParameter(CacheConfigParameter.VARY.getName());
     }
 
     /**
@@ -197,6 +215,11 @@ public class CacheFilter implements Filter {
         httpServletResponse.setHeader(HTTPCacheHeader.CACHE_CONTROL.getName(), cacheControl.toString());
         httpServletResponse.setDateHeader(HTTPCacheHeader.EXPIRES.getName(), System.currentTimeMillis() + expiration
                 * 1000L);
+
+        // Set Vary field
+        if (vary != null && !vary.isEmpty()) {
+            httpServletResponse.setHeader(HTTPCacheHeader.VARY.getName(), vary);
+        }
 
         /*
          * By default, some servers (e.g. Tomcat) will set headers on any SSL content to deny caching. Omitting the

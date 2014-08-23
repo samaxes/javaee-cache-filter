@@ -32,10 +32,11 @@ import com.samaxes.filter.util.HTTPCacheHeader;
 
 /**
  * <p>
- * Completely disable browser caching.
+ * Filter allowing to completely disable browser caching.
  * </p>
+ * <h2>Sample configuration:</h2>
  * <p>
- * Example configuration:
+ * Declare the filter in your web descriptor file {@code web.xml}:
  * </p>
  *
  * <pre>
@@ -49,17 +50,24 @@ import com.samaxes.filter.util.HTTPCacheHeader;
  * </p>
  *
  * <pre>
+ * &lt;!-- Using Servlet mapping --&gt;
  * &lt;filter-mapping&gt;
  *     &lt;filter-name&gt;noCache&lt;/filter-name&gt;
  *     &lt;servlet-name&gt;MyServlet&lt;/servlet-name&gt;
  *     &lt;dispatcher&gt;REQUEST&lt;/dispatcher&gt;
  *     &lt;dispatcher&gt;FORWARD&lt;/dispatcher&gt;
  * &lt;/filter-mapping&gt;
+ *
+ * &lt;!-- Or URL mapping --&gt;
+ * &lt;filter-mapping&gt;
+ *     &lt;filter-name&gt;noCache&lt;/filter-name&gt;
+ *     &lt;url-pattern&gt;/*&lt;/url-pattern&gt;
+ * &lt;/filter-mapping&gt;
  * </pre>
  *
  * @author Samuel Santos
  * @author John Yeary
- * @version 2.2.0
+ * @version 2.3.0
  */
 public class NoCacheFilter implements Filter {
 

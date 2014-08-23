@@ -23,7 +23,7 @@ package com.samaxes.filter.util;
  *
  * @author Samuel Santos
  * @author John Yeary
- * @version 2.2.0
+ * @version 2.3.0
  */
 public enum HTTPCacheHeader {
     /**
@@ -43,7 +43,12 @@ public enum HTTPCacheHeader {
     /**
      * The ETag response-header field provides the current value of the entity tag for the requested variant.
      */
-    ETAG("ETag");
+    ETAG("ETag"),
+    /**
+     * The Vary field value indicates the set of request-header fields that fully determines, while the response is
+     * fresh, whether a cache is permitted to use the response to reply to a subsequent request without revalidation.
+     */
+    VARY("Vary");
 
     private final String name;
 
