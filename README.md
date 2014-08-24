@@ -16,9 +16,9 @@ Click on the filter's name to access its documentation:
 
 | Filter                                    | Description                                                                                                         |
 | ---                                       | ---                                                                                                                 |
-| [CacheFilter](../../wiki/CacheFilter)     | Allows you to enable browser caching for requested resources.                                                       |
-| [NoCacheFilter](../../wiki/NoCacheFilter) | Allows you to completely disable browser caching for requested resources.                                           |
-| [NoETagFilter](../../wiki/NoETagFilter)   | Allows you to disable HTTP ETag headers set by most Java web containers (e.g. [Tomcat](http://tomcat.apache.org/)). |
+| [CacheFilter](https://github.com/samaxes/javaee-cache-filter/wiki/CacheFilter)     | Allows you to enable browser caching for requested resources.                                                       |
+| [NoCacheFilter](https://github.com/samaxes/javaee-cache-filter/wiki/NoCacheFilter) | Allows you to completely disable browser caching for requested resources.                                           |
+| [NoETagFilter](https://github.com/samaxes/javaee-cache-filter/wiki/NoETagFilter)   | Allows you to disable HTTP ETag headers set by most Java web containers (e.g. [Tomcat](http://tomcat.apache.org/)). |
 
 ## Maven dependency
 
