@@ -37,7 +37,7 @@ import com.samaxes.filter.util.HTTPCacheHeader;
  * <p>
  * Filter allowing to enable browser caching.
  * </p>
- * <table border="1">
+ * <table summary="Filter options" border="1">
  * <tr>
  * <th>Option</th>
  * <th>Required</th>
@@ -165,7 +165,7 @@ import com.samaxes.filter.util.HTTPCacheHeader;
  *
  * @author Samuel Santos
  * @author John Yeary
- * @version 2.3.0
+ * @version 2.3.1
  */
 public class CacheFilter implements Filter {
 

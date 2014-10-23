@@ -34,7 +34,7 @@ import com.samaxes.filter.util.HTTPCacheHeader;
 /**
  * <p>
  * Filter allowing to disable {@code ETag} header from a HTTP response.
- * <p>
+ * </p>
  * <h2>Sample configuration</h2>
  * <p>
  * <strong>Note:</strong> This configuration describes how to disable HTTP {@code ETag} header set by the
@@ -63,7 +63,7 @@ import com.samaxes.filter.util.HTTPCacheHeader;
  *
  * @author Samuel Santos
  * @author John Yeary
- * @version 2.3.0
+ * @version 2.3.1
  */
 public class NoETagFilter implements Filter {
 

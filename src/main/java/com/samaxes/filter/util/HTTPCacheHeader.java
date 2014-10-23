@@ -23,7 +23,7 @@ package com.samaxes.filter.util;
  *
  * @author Samuel Santos
  * @author John Yeary
- * @version 2.3.0
+ * @version 2.3.1
  */
 public enum HTTPCacheHeader {
     /**

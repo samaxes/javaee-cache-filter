@@ -67,7 +67,7 @@ import com.samaxes.filter.util.HTTPCacheHeader;
  *
  * @author Samuel Santos
  * @author John Yeary
- * @version 2.3.0
+ * @version 2.3.1
  */
 public class NoCacheFilter implements Filter {
 
@@ -90,7 +90,7 @@ public class NoCacheFilter implements Filter {
         HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse;
 
         // set cache directives
-        httpServletResponse.setHeader(HTTPCacheHeader.CACHE_CONTROL.getName(), "no-cache, no-store, must-revalidate");
+        httpServletResponse.setHeader(HTTPCacheHeader.CACHE_CONTROL.getName(), "no-cache, no-store");
         httpServletResponse.setDateHeader(HTTPCacheHeader.EXPIRES.getName(), 0L);
 
         filterChain.doFilter(servletRequest, servletResponse);

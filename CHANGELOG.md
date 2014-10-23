@@ -1,5 +1,9 @@
 # Java EE Cache Filter
 
+## 2.3.1
+
+* Remove `must-revalidate` cache directive from `NoCacheFilter`.
+
 ## 2.3.0
 
 * Add support for `Vary` HTTP header in `CacheFilter` responses (#2).
