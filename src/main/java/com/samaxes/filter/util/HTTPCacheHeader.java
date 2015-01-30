@@ -48,7 +48,17 @@ public enum HTTPCacheHeader {
      * The Vary field value indicates the set of request-header fields that fully determines, while the response is
      * fresh, whether a cache is permitted to use the response to reply to a subsequent request without revalidation.
      */
-    VARY("Vary");
+    VARY("Vary"),
+    /**
+     * The Date general-header field represents the date and time at which the message was originated, having the
+     * same semantics as orig-date in RFC 822.
+     */
+    DATE("Date"),
+    /**
+     * The Last-Modified entity-header field indicates the date and time at which the origin server believes the
+     * variant was last modified.
+     */
+    LAST_MODIFIED("Last-Modified");
 
     private final String name;
 
