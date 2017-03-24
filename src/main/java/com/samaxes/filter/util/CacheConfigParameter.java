@@ -42,7 +42,14 @@ public enum CacheConfigParameter {
      * Cache directive to instructs proxies to cache different versions of the same resource based on specific
      * request-header fields.
      */
-    VARY("vary");
+    VARY("vary"),
+    /**
+     * Cache directive to define any file extensions that should be ignored. Expect a space delimited list.
+     *
+     * Example: .html .map .xyz
+     */
+    EXCLUDE_EXTENSIONS("exclude-extensions"),
+    ;
 
     private final String name;
 
