@@ -19,6 +19,11 @@
 package com.samaxes.filter;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -26,6 +31,7 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
 
@@ -177,6 +183,8 @@ public class CacheFilter implements Filter {
 
     private String vary;
 
+    private List<String> excludeExtensions;
+
     /**
      * {@inheritDoc}
      */
@@ -194,6 +202,14 @@ public class CacheFilter implements Filter {
                 : Cacheability.PUBLIC;
         mustRevalidate = Boolean.valueOf(filterConfig.getInitParameter(CacheConfigParameter.MUST_REVALIDATE.getName()));
         vary = filterConfig.getInitParameter(CacheConfigParameter.VARY.getName());
+		excludeExtensions = Arrays.stream(
+						Optional.ofNullable(
+								filterConfig.getInitParameter(CacheConfigParameter.EXCLUDE_EXTENSIONS.getName()))
+						.orElse("")
+						.split(" ")
+					)
+					.filter(ext -> !ext.isEmpty())
+					.collect(Collectors.toList());
     }
 
     /**
@@ -205,6 +221,19 @@ public class CacheFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
             throws IOException, ServletException {
+		// If extensions provided filter on them
+		if (!excludeExtensions.isEmpty()) {
+			HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
+			String uri = httpServletRequest.getRequestURI();
+			String ext = uri.substring(uri.lastIndexOf("."));
+			// if found, continue filter chain and skip our the rest of our cache filter
+			if (excludeExtensions.contains(ext)) {
+				filterChain.doFilter(servletRequest, servletResponse);
+				return;
+			}
+		}
+
+
         HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse;
         StringBuilder cacheControl = new StringBuilder(cacheability.getValue()).append(", max-age=").append(expiration);
         if (mustRevalidate) {
