@@ -26,11 +26,16 @@ package com.samaxes.filter.util;
  * @version 2.3.1
  */
 public enum Cacheability {
+    NO_CACHE("no-cache"),
+
+    NO_STORE("no-store"),
+
     /**
      * Indicates that the response MAY be cached by any cache, even if it would normally be non-cacheable or cacheable
      * only within a non-shared cache.
      */
     PUBLIC("public"),
+
     /**
      * Indicates that all or part of the response message is intended for a single user and MUST NOT be cached by a
      * shared cache. This allows an origin server to state that the specified parts of the response are intended for
