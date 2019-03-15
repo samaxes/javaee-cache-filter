@@ -19,6 +19,8 @@
 package com.samaxes.filter;
 
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -28,12 +30,40 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
 
+import com.samaxes.filter.util.Cacheability;
 import com.samaxes.filter.util.HTTPCacheHeader;
+import com.samaxes.filter.util.StringUtil;
 
 /**
  * <p>
  * Filter allowing to completely disable browser caching.
  * </p>
+ * <h2>Options</h2>
+ * <table summary="Filter options" border="1">
+ * <tr>
+ * <th>Option</th>
+ * <th>Required</th>
+ * <th>Default</th>
+ * <th>Since</th>
+ * <th>Description</th>
+ * </tr>
+ * <tr>
+ * <td>{@code no-cache}</td>
+ * <td>No</td>
+ * <td>{@code true}</td>
+ * <td>2.4</td>
+ * <td>Forces caches to submit the request to the origin server for validation before releasing a cached copy.
+ * </td>
+ * </tr>
+ * <tr>
+ * <td>{@code no-store}</td>
+ * <td>No</td>
+ * <td>{@code true}</td>
+ * <td>2.4</td>
+ * <td>The cache should not store anything about the client request or server response.
+ * </td>
+ * </tr>
+ * </table>
  * <h2>Sample configuration:</h2>
  * <p>
  * Declare the filter in your web descriptor file {@code web.xml}:
@@ -71,11 +101,25 @@ import com.samaxes.filter.util.HTTPCacheHeader;
  */
 public class NoCacheFilter implements Filter {
 
+    private static Cacheability[] ALLOWED_DIRECTIVES = new Cacheability[]{Cacheability.NO_CACHE, Cacheability.NO_STORE};
+
+    private String cacheControl;
+
     /**
      * {@inheritDoc}
      */
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
+        List<String> cacheControlDirectives = new LinkedList<String>();
+
+        for (Cacheability allowedDirective : ALLOWED_DIRECTIVES) {
+            String directive = allowedDirective.getValue();
+            String filterConfigValue = filterConfig.getInitParameter(directive);
+            if (filterConfigValue == null || Boolean.valueOf(filterConfigValue)) {
+                cacheControlDirectives.add(directive);
+            }
+        }
+        cacheControl = StringUtil.join(", ", cacheControlDirectives.toArray(new String[]{}));
     }
 
     /**
@@ -90,7 +134,7 @@ public class NoCacheFilter implements Filter {
         HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse;
 
         // set cache directives
-        httpServletResponse.setHeader(HTTPCacheHeader.CACHE_CONTROL.getName(), "no-cache, no-store");
+        httpServletResponse.setHeader(HTTPCacheHeader.CACHE_CONTROL.getName(), cacheControl);
         httpServletResponse.setDateHeader(HTTPCacheHeader.EXPIRES.getName(), 0L);
 
         filterChain.doFilter(servletRequest, servletResponse);
